@@ -3,7 +3,7 @@ name = "swissbracketmatching"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "ipywidgets>=8.1.8",
     "jupyterlab>=4.5.0",
@@ -14,4 +14,5 @@ dependencies = [
     "rstt>=0.6.7.1",
     "scikit-learn>=1.7.2",
     "seaborn>=0.13.2",
+    "xarray>=2025.12.0",
 ]

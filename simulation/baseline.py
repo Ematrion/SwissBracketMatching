@@ -75,14 +75,15 @@ def plot_model_prob(proba: dict[str, dict[int, float]]):
         ax.bar(x, y, color="steelblue")
         #ax.plot(x, y, marker="o", linewidth=2)
         ax.set_ylim(0, 1.05)
-        ax.set_xlim(min(x) - 0.5, max(x) + 0.5)
-
-        ax.set_xlabel("Seed")
+        #ax.set_xlim(min(x) - 0.5, max(x) + 0.5)
+        ax.set_xticks(x)
+        
+        ax.set_xlabel("Skill Rank")
         ax.set_ylabel("Top8 probability")
         ax.grid(alpha=0.3)
 
     fig.text(0.5, 0.94, "Model Heatmaps", ha="center", fontsize=16)
-    fig.text(0.5, 0.49, "Top-8 Qualification Probability by Seed",
+    fig.text(0.5, 0.49, "Top-8 Qualification Probability by Skill Rank",
             ha="center", fontsize=16)
     
     plt.show()

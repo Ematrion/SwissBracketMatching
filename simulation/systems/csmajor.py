@@ -1,4 +1,4 @@
-from rstt.stypes import Solver # Seeder, Shuffler, Generator, Evaluator
+from rstt.stypes import Solver, Generator # Seeder, Shuffler, Generator, Evaluator
 from rstt import Ranking, SwissBracket
 from simulation.systems.tiebreaker import TieBreakReSeeder
 import utils
@@ -32,7 +32,7 @@ class GrahamPittExample(SwissBracket):
         self.registration([p for p in seeding])
         
         
-from rstt.utils import utils as uu, matching as um, competition as uc
+#from rstt.utils import utils as uu, matching as um, competition as uc
 
 class SpeedUp:
     def generate(self, status: list[int]):
@@ -47,5 +47,3 @@ class GrahamPittSolution(GrahamPittExample):
         super().__init__(name=name, seeding=seeding, solver=solver)
         #self.def_evaluator = self.def_seeder
         self.generators[(0,0)] = SpeedUp() # type: ignore
-        
-        

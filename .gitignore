@@ -1,3 +1,9 @@
+# PROJECT NO TRACK CODE/DATA/FILE
+.dev/
+.DS_STORE
+.DS_Store
+data/backups
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

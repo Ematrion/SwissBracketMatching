@@ -47,13 +47,17 @@ class CompleteBiPartite:
 
         return pos
 
-    
     def plot(self, coloring=True):
         if self.coloring and coloring:
-            colors = [self.coloring[tuple(edge)] for edge in self.graph.edges()] # type: ignore
-            nx.draw(self.graph, pos=self.positions(), with_labels=True,
-                    edge_color=colors, edge_cmap=cmap, edge_vmin=0, edge_vmax=len(cmap.colors) - 1) # type: ignore
-            #plt.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), handles=handles)
+            colors = []
+            for edge in self.graph.edges():
+                color_idx = self.coloring.get(tuple(edge))
+                if color_idx is None or color_idx >= len(cmap.colors):
+                    colors.append("#000000")  # Black for missing or out-of-range
+                else:
+                    colors.append(cmap.colors[color_idx])
+            
+            nx.draw(self.graph, pos=self.positions(), with_labels=True, edge_color=colors)
         else:
             nx.draw(self.graph, pos=self.positions(), with_labels=True)
     
