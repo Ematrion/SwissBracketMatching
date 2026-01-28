@@ -84,3 +84,36 @@ def plot_multiple_Q(v_list, results, s, m, sc, models):
     cbar.set_label("Qualification Probability")
 
     plt.show()
+    
+    
+    
+'''
+import matplotlib.pyplot as plt
+import numpy as np
+import ipywidgets as widgets
+from IPython.display import display, clear_output
+
+from evaluation.result_matrix import plot_multiple_Q
+
+v_options = list(results.keys())
+s_options = list(results[v_options[0]].keys())
+m_options = list(models.keys())
+sc_options = list(results[v_options[0]][s_options[0]][m_options[0]].keys())
+
+#v_widget = widgets.Dropdown(options=v_options, description='v:')
+s_widget = widgets.Dropdown(options=s_options, description='Solver:')
+m_widget = widgets.Dropdown(options=m_options, description='Team Model:')
+sc_widget = widgets.Dropdown(options=sc_options, description='Seedings:')
+
+ui = widgets.HBox([s_widget, m_widget, sc_widget])
+out = widgets.interactive_output(plot_multiple_Q,
+                                 {'v_list': widgets.fixed(variants),
+                                  'results': widgets.fixed(results),
+                                  's': s_widget,
+                                  'm': m_widget,
+                                  'sc': sc_widget,
+                                  'models': widgets.fixed(models)})
+
+display(ui, out)
+
+'''

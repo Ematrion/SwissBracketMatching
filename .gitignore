@@ -2,6 +2,7 @@
 .dev/
 .DS_STORE
 .DS_Store
+*.DS_Store
 data/backups
 
 # Byte-compiled / optimized / DLL files
