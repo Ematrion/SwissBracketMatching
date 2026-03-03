@@ -1,4 +1,5 @@
 from rstt import Ranking, Competition
+from utils import swiss_bracket_n6
 
 
 def fairness_from_cup(cup: Competition, reference: Ranking):
@@ -162,3 +163,29 @@ def avg_competitiveness_from_cup(cup: Competition, reference: Ranking, qprob: di
         competitiveness_sum += win_prob
     
     return competitiveness_sum / len(all_games)
+
+def last_round_matching_index(cup: Competition, reference: Ranking):
+    """
+    Identify which of the 15 swiss_bracket_n6 matchings was used in the last round.
+    Returns 0-based index (0-14).
+    Only meaningful for Swiss bracket tournaments.
+    """
+    last_round = cup.games(by_rounds=True)[-1]
+
+    players = []
+    actual_pairs = []
+    for duel in last_round: #type: ignore
+        p1, p2 = duel.winner(), duel.loser()
+        players.extend([p1, p2])
+        actual_pairs.append(frozenset([p1, p2]))
+
+    sorted_players = sorted(players, key=lambda p: reference[p]) # type:ignore
+    matchings = swiss_bracket_n6(sorted_players)
+
+    actual = set(actual_pairs)
+    for idx, matching in enumerate(matchings):
+        candidate = {frozenset([matching[i], matching[i+1]]) for i in range(0, 6, 2)}
+        if candidate == actual:
+            return idx + 1  # 1-based index
+
+    raise ValueError(f"Last round pairing does not match any of the 15 swiss_bracket_n6 matchings")

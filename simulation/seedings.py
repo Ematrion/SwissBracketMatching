@@ -37,7 +37,7 @@ def seeding_classes(nbv: int):
     prior_mid = shake_seed([top4, mid8, bottom4], nb=nbv) # middle 8 teams
     post_mid = shake_seed([top5, mid6, bottom5], nb=nbv) # middle 6 teams
     random_seeds = shake_seed([seeds_values], nb=nbv)
-    return {'ACR2': correct_halves, 'ACR3': prior_mid, 'ACR5': post_mid, 'RANDOM': random_seeds}
+    return {'RANDOM': random_seeds, 'ACR2': correct_halves, 'ACR3': prior_mid, 'ACR5': post_mid}
 
 
 def rank_corr(seed):

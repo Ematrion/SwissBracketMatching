@@ -1,6 +1,58 @@
 from typing import Callable
 import itertools
 
+import ema.algorithm as ema_alg
+from ema.coverings import FLAT, STAR
+
+_K33_MATCHINGS = {**FLAT, **STAR}
+
+
+def make_k44_coloring(pm: str, alg: str, order: list[int]) -> Callable[[list[int]], list[list]]:
+    """
+    Dynamically generate a K4,4 coloring function from its parameters.
+
+    Parameters
+    ----------
+    pm : str
+        Starting K3,3 perfect matching ('F1','F2','F3','S1','S2','S3')
+    alg : str
+        Extension algorithm ('CROSS' or 'ROT')
+    order : list[int]
+        Permutation of [0,1,2,3] specifying round ordering
+
+    Returns
+    -------
+    Callable: (players: list[int]) -> list[list]
+        Same signature as F1_CROSS_0123 / F1_ROT_0132
+    """
+    matching = _K33_MATCHINGS[pm]
+    u, v = ema_alg.new_vertex()
+
+    if alg == 'ROT':
+        extended = ema_alg.one_more_edge(matching, u, v)
+        cover = ema_alg.roll_match(extended)
+        rounds = [ema_alg.relabelling(m) for m in cover.values()]
+    elif alg == 'CROSS':
+        opposite = STAR if pm.startswith('F') else FLAT
+        rounds = [ema_alg.relabelling(ema_alg.one_more_edge(matching, u, v))]
+        rounds += [ema_alg.relabelling(ema_alg.mixture(matching, op, u, v))
+                   for op in opposite.values()]
+    else:
+        raise ValueError(f"alg must be 'ROT' or 'CROSS', got {alg}")
+
+    rounds = [rounds[i] for i in order]
+
+    # Pre-compute index patterns: ema is 1-indexed, utils is 0-indexed
+    patterns = []
+    for round_edges in rounds:
+        sorted_edges = sorted(round_edges, key=lambda e: e[0])
+        patterns.append([idx for left, right in sorted_edges for idx in (left - 1, right - 1)])
+
+    def coloring(players: list[int]) -> list[list]:
+        return [[players[i] for i in pattern] for pattern in patterns]
+
+    return coloring
+
 
 def flat_match(elems: list[int]) -> list:
     # [1,2,3,4,5,6,7,8] -> [1,8,2,7,3,6,4,5]
