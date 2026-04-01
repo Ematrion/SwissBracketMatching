@@ -9,7 +9,7 @@ from rstt import BasicPlayer, BTRanking, LogSolver, RoundRobin
 
 DATA_DIR = "simulation/population"
 
-def load_population(directory: str) -> dict[str, list[BasicPlayer]]:
+def load_population(directory: str) -> dict[str, BTRanking]:
     data = {}
     for file in os.listdir(directory):
         if file.endswith('.json'):

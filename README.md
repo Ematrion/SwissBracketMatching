@@ -1,14 +1,15 @@
 # Swiss Bracket Matching: The Expected Matching Approach
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Research on matching algorithms for Swiss Bracket tournaments in competitive eSports** The method adresses a fairness issue by ensuring the existence of perfect matching in the last round of the tournament.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## Overview
 
-This repository presents a comprehensive analysis of matching strategies in the **Swiss Bracket** format - a tournament structure used by major eSports events including Valve's CS:GO Majors and Riot's League of Legends World Championship. The Swiss Bracket aims to qualify 8 teams from a pool of 16 for playoff stages through a series of best-of-one matches. It is an alternative to traditionnal group stage before play-offs.
+This repository presents a comprehensive analysis of matching strategies in the **Swiss Bracket** format - a tournament structure used by major eSports events including Valve's Counter-Strike Majors and Riot's League of Legends World Championship. The Swiss Bracket qualifies 8 teams from a pool of 16 for playoff stages through five rounds. It is an alternative to traditionnal group stage before play-offs.
 
 ### The Problem
 
@@ -38,13 +39,13 @@ This research:
    - RSTT framework implementation
    - Reproduction of Twitter example
    - Experimental design and parameters
-   - Comparison of 8 tournament variants across 16 configurations
+   - Comparison of 8 tournament variants across 48 configurations
 
 3. **[3_Dashboard.ipynb](3_Dashboard.ipynb)** - Interactive Dashboard
    - Comprehensive metric definitions
    - Interactive visualizations for all results
    - User guide for interpreting findings
-   - Comparison across utility loss, precision, fairness, balance, and frustration metrics
+   - Comparison across utility loss, precision, fairness, balance, and last round quality
 
 ### 🔧 Code Base
 
@@ -110,7 +111,6 @@ Across **4 population models** × **4 seeding classes** × **3 solvers** × **20
 **EMA Rotation advantages:**
 - **Better qualification accuracy**: Lower utility loss and higher top-8 precision across all seeding qualities
 - **Higher robustness**: Maintains performance even with random seedings
-- **Fewer frustrating outcomes**: Reduces head-to-head violations and mismatches when top 8 is known.
 - **Improved last-round fairness**: More appropriate pairings in decisive moments
 
 **Key insight:** The current "speed-up" approach optimizes for perfect seeds but fails under realistic conditions. EMA is robust to seeding uncertainty.
@@ -125,7 +125,7 @@ For teams at 2-2 record reaching Round 5:
 
 0. Input: a perfect matching on $K_{3,3}$
 1. Order top-half teams: $(a, 1, 2, 3)$
-2. Order bottom-half teams: $(b, 6, 5, 4)$ (reversed)
+2. Order bottom-half teams: $(b, 6, 5, 4)$
 3. Generate pairings by rotation: $(V_{1,j}, V_{2,(j-i) \mod 4})$ for $i = 0,1,2,3$
 
 This creates a proper 4-edge coloring of $K_{4,4}$ where:
@@ -146,11 +146,11 @@ The simulation study evaluates systems across six key metrics:
 | Metric | Description | Optimal Value |
 |--------|-------------|--------------|
 | **Utility Loss** | Qualification probability gap between actual and ideal outcomes | Lower |
-| **Top 8 Precision** | Percentage of qualified teams from true top 8 | Higher (→1.0) |
+| **Top 8 Precision** | Percentage of qualified teams from true top 8 | Higher |
 | **Fairness** | Deviation from ideal seed-based pairings | Lower |
 | **Balance** | Average skill difference in matchups | Lower |
 | **Last Round Fairness** | Round 5 specific pairing quality | Lower |
-| **Frustration** | Frequency of head-to-head violations, inversions, etc. | Lower |
+
 
 See [3_Dashboard.ipynb](.dev/claude/3_Dashboard.ipynb) for detailed metric definitions and interpretation guides.
 
@@ -256,10 +256,6 @@ This project uses **RSTT** (Ranking & Seeding Tournament Toolkit), a custom Pyth
 - Fewer mismatches between top and bottom seeds in deciding games
 - More consistent performance across different population models
 
-### Frustration Metrics
-- **50% reduction** in head-to-head violations vs Current Major
-- **Eliminates** $K_{3,3}$ matching failures (structural guarantee)
-
 ### Robustness
 - **Current Major performs well only with perfect seeds and deterministic outcomes** 
 - **EMA maintains advantages across all seeding qualities**
@@ -283,7 +279,7 @@ This project uses **RSTT** (Ranking & Seeding Tournament Toolkit), a custom Pyth
 
 ### For Competitive Integrity
 
-The "speed-up" matching approach was designed to handle perfect seeds but and deterministic game outcome:
+The "speed-up" matching approach was designed to handle perfect seeds and deterministic game outcome, but:
 
 - Real tournaments never have perfect seeds
 - Predefine results is match fixing, not entertaining competition

@@ -3,19 +3,28 @@ from functools import wraps
 import numpy as np
 from scipy.stats import spearmanr, kendalltau
 from rstt import Ranking, Competition
+import random
 
 
 
 # ---- Utility ---- #
+def top8_index(standing, reference):
+    qualified_indices = []
+    for player, final_rank in standing.items():
+        if final_rank <= 8:
+            qualified_indices.append(reference[player])
+    if len(qualified_indices) == 8:
+        return qualified_indices
+    else:
+        raise RuntimeError(f"Standing does not have a top 8:\n{"\n".join([f"{v} {k.name()}" for k,v in standing.items()])}")
+    
+    
 def _extract_qualification_data(cup: Competition, reference: Ranking, prob: dict[int, float]):
     """Shared extraction: P_fair, Q_observed, qualified_indices from cup results."""
     standing = cup.standing()
     P_fair = np.array([prob[i] for i in range(16)])
 
-    qualified_indices = []
-    for player, final_rank in standing.items():
-        if final_rank <= 8:
-            qualified_indices.append(reference[player])
+    qualified_indices = top8_index(standing, reference)
 
     Q_observed = np.array([1 if i in qualified_indices else 0 for i in range(16)])
     return P_fair, Q_observed, qualified_indices
