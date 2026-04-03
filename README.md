@@ -1,6 +1,6 @@
 # Swiss Bracket Matching: The Expected Matching Approach
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19409379.svg)](https://doi.org/10.5281/zenodo.19409379)
 
 **Research on matching algorithms for Swiss Bracket tournaments in competitive eSports** The method adresses a fairness issue by ensuring the existence of perfect matching in the last round of the tournament.
 
