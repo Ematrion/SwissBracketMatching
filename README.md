@@ -4,12 +4,17 @@
 
 **Research on matching algorithms for Swiss Bracket tournaments in competitive eSports** The method adresses a fairness issue by ensuring the existence of perfect matching in the last round of the tournament.
 
+There is a series of videos on youtube explaining the work
+1. [Introduction](https://www.youtube.com/watch?v=Y9bU4tdHPGM&list=PLK9VMh_9P3x2JfVCogYb6fQ688F0jsGAC) to the tournament format
+2. [Algorithm](https://www.youtube.com/watch?v=opcXZ0DJEcQ&list=PLK9VMh_9P3x2JfVCogYb6fQ688F0jsGAC&index=2) presentation
+3. [Evaluation](https://www.youtube.com/watch?v=juEFhuyHEGA&list=PLK9VMh_9P3x2JfVCogYb6fQ688F0jsGAC&index=3) of the systems
 
 ---
 
 ## Overview
 
 This repository presents a comprehensive analysis of matching strategies in the **Swiss Bracket** format - a tournament structure used by major eSports events including Valve's Counter-Strike Majors and Riot's League of Legends World Championship. The Swiss Bracket qualifies 8 teams from a pool of 16 for playoff stages through five rounds. It is an alternative to traditionnal group stage before play-offs.
+
 
 ### The Problem
 
